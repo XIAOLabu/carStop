@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!-- 配置字符集编码为utf-8 -->
+	<constant name="struts.il8n.encoding" value="Utf-8" />
+
+	<!-- 配置用户package -->
+	<package name="user" extends="struts-default" namespace="/">
+
+		<!-- 配置系统异常页面的跳转 -->
+		<action name="toError" class="cn.gx.czz.web.ToErrorAction">
+			<!-- 系统异常跳转到增加页面 -->
+			<result name="error" type="dispatcher">/error.jsp</result>
+		</action>
+
+		<!-- 配置新增用户的跳转 -->
+		<action name="toAddUser" class="cn.gx.czz.web.ToAddUserAction"
+			method="execute">
+			<!-- 跳转到新增用户页面 -->
+			<result name="adduser" type="dispatcher">/adduser.jsp</result>
+			<!-- 跳转到登录页面 -->
+			<result name="login" type="redirectAction">toLogin.action</result>
+		</action>
+
+		<!-- 配置登录页面的跳转 -->
+		<action name="toLogin" class="cn.gx.czz.web.ToLoginAction">
+			<!-- 跳转到登录页面 -->
+			<result name="login" type="dispatcher">/login.jsp</result>
+		</action>
+
+		<!-- 配置用户中心页面的跳转 -->
+		<action name="toHostIndex"
+			class="cn.gx.czz.web.ToHostIndexAction">
+			<!-- 跳转到用户中心页面 -->
+			<result name="hostIndex" type="dispatcher">/hostIndex.jsp</result>
+			<!-- 跳转到登录页面 -->
+			<result name="login" type="redirectAction">toLogin.action</result>
+		</action>
+
+		<!-- 配置管理用户页面的跳转 -->
+		<action name="toUserManaGement"
+			class="cn.gx.czz.web.ToUserManaGementAction" method="execute">
+			<result name="usermanagement" type="redirectAction">myUser.action
+			</result>
+		</action>
+
+		<!-- 配置查询用户信息页面的跳转 -->
+		<action name="toQueryUser"
+			class="cn.gx.czz.web.ToQueryUserAction">
+			<result name="quser" type="dispatcher">/userlist.jsp</result>
+		</action>
+
+
+		<!-- 配置进行用户新增处理的action -->
+		<action name="addUser" class="cn.gx.czz.web.AddUserAction">
+			<!-- 增加失败跳转到增加页面 -->
+			<result name="register" type="dispatcher">/adduser.jsp</result>
+			<!-- 增加成功跳转到用户管理页面 -->
+			<result name="usermanagement" type="redirectAction">toUserManaGement.action
+			</result>
+			<!-- 系统异常跳转到增加页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置进行登录处理的action -->
+		<action name="login" class="cn.gx.czz.web.LoginAction">
+			<!-- 登录失败跳转到登录页面 -->
+			<result name="login" type="dispatcher">/login.jsp</result>
+			<!-- 登录成功跳转到用户中心页面 -->
+			<result name="hostIndex" type="redirectAction">toHostIndex.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置进行退出处理的action -->
+		<action name="logout" class="cn.gx.czz.web.LogoutAction">
+			<!-- 退出登录跳转到登录页 -->
+			<result name="index" type="dispatcher">/login.jsp
+			</result>
+		</action>
+
+		<!-- 配置用户列表查询Action -->
+		<action name="myUser" class="cn.gx.czz.web.ShowUserAction">
+			<!-- 跳转到用户信息页面 -->
+			<result name="myUser" type="dispatcher">/usermanagement.jsp</result>
+			<!-- 查询用户跳转到单个用户信息页面 -->
+			<result name="myUser1" type="dispatcher">/userpersonal.jsp</result>
+			<!-- 需要登录时，跳转到登录页面 -->
+			<result name="login" type="redirectAction">toLogin.action</result>
+			<!-- 查询失败跳转 -->
+			<result name="noquery" type="dispatcher">/usermanagement.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置删除用户Action -->
+		<action name="delUser" class="cn.gx.czz.web.DelUserAction">
+			<!-- 成功删除用户跳转到用户信息页面 -->
+			<result name="delUser" type="redirectAction">myUser.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+
+		<!-- 配置删除选中用户Action -->
+		<action name="delAllUser"
+			class="cn.gx.czz.web.DelAllUserAction">
+			<!-- 成功删除用户跳转到用户信息页面 -->
+			<result name="delAllUser" type="redirectAction">myUser.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 更新用户action 1 -->
+		<action name="up1User" class="cn.gx.czz.web.Up1UserAction">
+			<!-- 查询到用户后跳转到更新用户页面 -->
+			<result name="selectUser" type="dispatcher">/upuser.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置更新用户action 2 -->
+		<action name="up2User" class="cn.gx.czz.web.Up2UserAction">
+			<!-- 用户更新成功后跳转到用户信息页面 管理员用户 -->
+			<!-- <result name="selectUser" type="redirectAction">myUser.action</result> -->
+			<result name="selectUser" type="dispatcher">/userlist.jsp</result>
+			<!-- 用户更新成功后跳转到用户信息页面 非管理员用户 -->
+			<result name="selectUser1" type="redirectAction">myUser.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+	</package>
+
+
+	<!-- 配置停车位package -->
+	<package name="position" extends="struts-default" namespace="/">
+
+		<!-- 新增车位页面跳转 -->
+		<action name="toAddPosi" class="cn.gx.czz.web.ToAddPosiAction">
+			<result name="addcw" type="dispatcher">/parkinglot/addallcw.jsp</result>
+			<!-- 跳转到登录页面 -->
+			<result name="login" type="redirectAction">toLogin.action</result>
+		</action>
+
+		<!-- 配置新增车位action -->
+		<action name="addPosi" class="cn.gx.czz.web.AddPosiAction">
+			<result name="addcw" type="redirectAction">showPosi.action</result>
+			<result name="noadd" type="dispatcher">/parkinglot/noadd.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置分页显示车位Action -->
+		<action name="showPosi" class="cn.gx.czz.web.ShowPosiAction">
+			<result name="showposi" type="dispatcher">/parkinglot/cwlist.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置删除车位的Action -->
+		<action name="delPosi" class="cn.gx.czz.web.DelPosiAction">
+			<result name="delposi" type="redirectAction">showPosi.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置删除选中车位的Action -->
+		<action name="delAllPost"
+			class="cn.gx.czz.web.DelAllPostAction">
+			<result name="delallposi" type="redirectAction">showPosi.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置更新车位的action1 -->
+		<action name="up1Posi" class="cn.gx.czz.web.Up1PosiAction">
+			<result name="selectPosi" type="dispatcher">/parkinglot/upposi.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置更新车位的action2 -->
+		<action name="up2Posi" class="cn.gx.czz.web.Up2PosiAction">
+			<result name="selectPosi" type="redirectAction">showPosi.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置查询车位的Action -->
+		<action name="toQueryPosi"
+			class="cn.gx.czz.web.ToQueryPosiAction">
+			<result name="showup" type="dispatcher">/parkinglot/quteycwlist.jsp
+			</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+	</package>
+
+	<!-- 配置车辆car -->
+	<package name="car" extends="struts-default" namespace="/">
+
+		<!-- 配置跳转用户车辆的action -->
+		<action name="toShowCar" class="cn.gx.czz.web.ToUserCarAction">
+			<result name="toshowcar" type="dispatcher">/car/usercarlist.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置新增车辆的Action -->
+		<action name="addCar" class="cn.gx.czz.web.AddCarUserAction">
+			<result name="savecar" type="redirectAction">showCar.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置查询当前用户的车辆信息的action -->
+		<action name="showCar" class="cn.gx.czz.web.ShowUserCarAction">
+			<result name="show" type="dispatcher">/car/usercarlist.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置更新用户车辆信息的Action1 -->
+		<action name="up1UserCar"
+			class="cn.gx.czz.web.Up1UserCarAction">
+			<result name="up1UserCar" type="dispatcher">/car/upcaruser.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置更新用户车辆信息的Action2 -->
+		<action name="up2UserCar"
+			class="cn.gx.czz.web.Up2UserCarAction">
+			<result name="up2UserCar" type="dispatcher">/car/usercarlist.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置删除用户自己车辆的action -->
+		<action name="delUserCar"
+			class="cn.gx.czz.web.DelUserCarAction">
+			<result name="delUserCar" type="dispatcher">/car/usercarlist.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+	</package>
+
+	<!-- 配置车辆出入场的package -->
+	<package name="caraccess" extends="struts-default"
+		namespace="/">
+
+		<!-- 配置跳转到已结算的停车车辆的Action -->
+		<action name="showCostStopOut"
+			class="cn.gx.czz.web.ShowCarOutStopAction">
+			<result name="showcoststop" type="dispatcher">/car/carout.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置根据车位区域返回车位号的Action -->
+		<action name="wherePosiNo"
+			class="cn.gx.czz.web.WherePosiwcAction">
+			<result name="posino" type="dispatcher">/car/carinto.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置保存入场车辆的Action -->
+		<action name="addCarInto"
+			class="cn.gx.czz.web.AddCarIntoAction">
+			<result name="addsc" type="redirectAction">showStop.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+
+		<!-- 配置分页查询停车信息的Action -->
+		<action name="showStop" class="cn.gx.czz.web.ShowCarStopAction">
+			<result name="showstop" type="dispatcher">/car/carinto.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置分页查询停车信息的Action -->
+		<action name="showStopout"
+			class="cn.gx.czz.web.ShowCarStopAction">
+			<result name="showstop" type="dispatcher">/car/carout2.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+
+		<!-- 配置删除停车信息的Action -->
+		<action name="delStop" class="cn.gx.czz.web.DelStopCarAction">
+			<result name="delStop" type="redirectAction">showStop.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置删除选中停车信息的Action -->
+		<action name="delAllCarInto"
+			class="cn.gx.czz.web.DelAllStopCarAction">
+			<result name="delAllStop" type="redirectAction">showStop.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置更新停车信息的Action1 -->
+		<action name="up1Stop" class="cn.gx.czz.web.Up1StopCarAction">
+			<result name="up1Stop" type="dispatcher">/car/upcarinto.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置更新停车信息的Action2 -->
+		<action name="up2Stop" class="cn.gx.czz.web.Up2StopCarAction">
+			<result name="up2Stop" type="redirectAction">showStop.action</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置出场车辆停车信息Action -->
+		<action name="stopOut" class="cn.gx.czz.web.StopCarOutAction">
+			<result name="stopOut" type="redirectAction">showStopout.action</result>
+			<!-- <result name="stopOut" type="dispatcher">/car/carout.jsp</result> -->
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置出场页的条件查询车辆的Action -->
+		<action name="queryStop" class="cn.gx.czz.web.QueryStopAction">
+			<result name="showQueryStop" type="dispatcher">
+				/car/querystop.jsp
+			</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+	</package>
+
+	<!-- 配置收费的package -->
+	<package name="charge" extends="struts-default" namespace="/">
+
+		<!-- 配置查看收费的Action -->
+		<action name="toShowCharge"
+			class="cn.gx.czz.web.ToShowChargeAction">
+			<result name="toShowCharge" type="dispatcher">/charge/chargerules.jsp
+			</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置更新收费的Action -->
+		<action name="upCharge" class="cn.gx.czz.web.UpChargeRules">
+			<result name="upchargeRules" type="dispatcher">/charge/upchargerules.jsp
+			</result>
+			<result name="up2chargeRules" type="redirectAction">toShowCharge.action
+			</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置车主或者车牌号查询的Action -->
+		<action name="queryChargeAll"
+			class="cn.gx.czz.web.QueryChargeAllAction">
+			<result name="showCost" type="dispatcher">/charge/chargeselect.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置月报表的查询Action -->
+		<action name="monthly"
+			class="cn.gx.czz.web.ShowMonthrlCostAction">
+			<result name="showMonthly" type="dispatcher">/charge/monthlyreport.jsp
+			</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 配置收费统计Action -->
+		<action name="tatiCharge"
+			class="cn.gx.czz.web.ChargeTatiAction">
+			<result name="showTati" type="dispatcher">/charge/chargestati.jsp</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 通过用户名 查询到自己的车辆车牌显示出每量车的消费总金额第一个跳转 -->
+		<action name="showUserCost1"
+			class="cn.gx.czz.web.ShowUserCostAction1">
+			<result name="showusercost1" type="dispatcher">/charge/chargeusercost1.jsp
+			</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+		<!-- 通过车牌号 查询到该车牌车辆的详细列表第2个跳转 -->
+		<action name="showUserCost2"
+			class="cn.gx.czz.web.ShowUserCostAction2">
+			<result name="showusercost2" type="dispatcher">/charge/chargeusercost2.jsp
+			</result>
+			<!-- 系统异常跳转到异常页面 -->
+			<result name="error" type="redirectAction">toError.action</result>
+		</action>
+
+
+	</package>
+
+
+</struts>
